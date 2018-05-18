@@ -1,5 +1,8 @@
 #include <iostream>
 #include <string.h>
+#include <fstream>
+#include <cstdlib>
+
 
 using namespace std;
 using std::cin;
@@ -15,7 +18,10 @@ void printMatrix(char**,int);
 
 void ejercicio2();
 int*** crearMatrix3(int);
-void fillMatrix2(int*** ,int);
+
+void division(int***,int,int);
+void printdivision(int***,int,int);
+
 
 
 void ejercicio1();
@@ -79,40 +85,95 @@ void ejercicio1(){
 }
 
 void ejercicio2(){
-/*	int size=3;
+
+/*
+	int n,i;
+	cout<<"grado del polinomio:";
+	cin>>n;
+	double *f;
+
+	f=new double[n+1];
+*/
+	
+	int size=3;
 	int*** matrix=NULL;
-	matrix=crearMatrix3(size);
+
 
 	int grado_alto;
-	int cont=1;
-	int cont2=grado_alto;
-	int num;
 	int a;
 	cout<<"ingrese el grado mas alto del polinomio:";
 	cin>>grado_alto;
 	cout<<endl;
-	string xx;
-	while(cont<=grado_alto){
-		
-		cout<<"ingrese x'"<<cont2<<":";
-		cin>>num;
-		cout<<endl;
-		x+=num;
-		cont2--;
 
-		cont++;
-	}
 	cout<<"ingrese a:";
 	cin>>a;
 	cout<<endl;
+	
+	int grado2=grado_alto+1;
+
+	matrix=crearMatrix3(grado2);
+
+	int c=0;
+
+	division(matrix,grado2,a);
+
 
 	
-	fillMatrix2(matrix,size);
+	
 
 
-*/
+
 	
 }
+
+
+
+void division(int*** matrix,int a,int valor_a){
+	int xs=0;
+	for(int i=0;i<a;i++){
+		xs=0;
+		cout<<"ingrese el valor de x'"<<i<<":";
+		cin>>xs;
+		cout<<endl;
+
+		matrix[0][0][i]=xs;
+	}
+	for(int j=0;j<a;j++){
+
+		for(int i=0;i<a;i++){
+
+			matrix[j][0][i]=matrix[0][0][i];
+			matrix[j][2][0]=matrix[0][0][0];
+		}
+	}
+
+	for(int k=0;k<a;k++){
+		for(int m=0;m<3;m++){
+			for(int e=0;e<a;e++){
+				matrix[k][1][e+1]=matrix[k][2][e]*valor_a;
+				matrix[k][2][e+1]=matrix[k][0][e+1]+matrix[k][1][e+1];
+			}
+		}
+	}
+	printdivision(matrix,a,valor_a);
+
+
+
+}
+
+
+void printdivision(int*** matrix,int size,int a){
+	for(int i=0;i<size;i++){
+		for(int j=0;j<3;j++){
+			for(int m=0;m<size;m++){
+				cout<<"|"<<matrix[i][j][m]<<"|";
+			}
+			cout<<"|"<<a<<endl;
+		}
+		cout<<endl;
+	}
+}
+
 
 int*** crearMatrix3(int size){
 	int*** matrix=new int**[size];
@@ -128,10 +189,7 @@ int*** crearMatrix3(int size){
 
 
 }
-void fillMatrix2(int*** matrix,int size){
 
-
-}
 //.-----------------------------
 
 void ejercicio3(){
@@ -180,58 +238,9 @@ void fillMatrix(char** matrix,int size,string name){
 	int size_n=name.length();
 	char array[25];
 	string nuevo="";
-/*
 
-int j=0;
-	for(int i=0;i<name.length();i++){
-		if(letras[i]!=24){
-			name[j]=letras[i];
-			j++;
-		}
-	}
+
 	
-//m2=name,m=letras
-	int i=0;
-	j=1;
-	while(j<=strlen()){
-		if(name[i]==nmae[j]){
-			for(int k=strlen(name)+1;k>j;k--){
-				name[k]=name[k-1];
-			}
-			name[j]='x';
-		}
-		i=i+2;
-		j=j+2;
-	}
-	if(strlen(name)%2!=0={
-			name[strlen(m2)+1]='\0';
-			name[strlen(m2)]='x';
-			}
-
-*/
-
-
-/*	strcpy (array_name,name.c_str());
-//prueba
-	for(int k=0;k<size_n;k++){
-	cout<<array_name[k];
-
-	}
-	cout<<endl;
-
-
-*/
-
-	for(int k=0;k<=25;k++){
-		if(letras[k]==name[cont]){
-			cont++;
-		}else{
-			nuevo+=letras[k];
-			cont++;
-		}
-	}
-
-
 	int cont2=0;
 	int cont3=0;
 
@@ -244,36 +253,39 @@ int j=0;
 				
 				matrix[i][j]=name[cont2];
 				cont2++;
-				
-
 		
-			}else{
-		
-						
-				matrix[i][j]=nuevo[cont3];
-				cont3++;
-							
-						}
-					}
+			}
+		}
 	}
-}
-		
 
-	
-
-
-
-
-		
-	
-/*
 	for(int i=0;i<size;i++){
 		for(int j=0;j<size;j++){
 
-			matrix[i][j]=letras[cont];
-			cont++;
+			if(matrix[i][j]==letras[cont] && matrix[i][j]!='*'){
+					
+				cont++;
+			}
+			if(matrix[i][j]!=letras[cont] && matrix[i][j]=='*'){
+				matrix[i][j]=letras[cont];
+				cont++;
+				}
+			}
 		}
-	}*/
+}
+
+
+		
+							
+	
+		
+
+	
+
+
+
+
+		
+	
 
 char** createMatrix(int size){
 	char** retValue=new char*[size];
