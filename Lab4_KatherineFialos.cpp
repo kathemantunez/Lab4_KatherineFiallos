@@ -94,6 +94,9 @@ void ejercicio2(){
 
 	f=new double[n+1];
 */
+	bool b=false;
+	int x=0;
+	do{
 	
 	int size=3;
 	int*** matrix=NULL;
@@ -118,8 +121,9 @@ void ejercicio2(){
 	division(matrix,grado2,a);
 
 
-	
-	
+	cout<<"desea continuar[1]:"<<endl;
+	cin>>x;
+	}while(x!=1);
 
 
 
@@ -150,7 +154,7 @@ void division(int*** matrix,int a,int valor_a){
 	for(int k=0;k<a;k++){
 		for(int m=0;m<3;m++){
 			for(int e=0;e<a;e++){
-				matrix[k][1][e+1]=matrix[k][2][e]*valor_a;
+				matrix[e][1][e+1]=matrix[k][2][e]*valor_a;
 				matrix[k][2][e+1]=matrix[k][0][e+1]+matrix[k][1][e+1];
 			}
 		}
